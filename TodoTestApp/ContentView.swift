@@ -29,8 +29,11 @@ struct ContentView: View {
         
         NavigationStack {
             List($todos, id: \.self, editActions: .all) { $item in
-                Text(item)
+                NavigationLink(item, value: item)
             }
+            .navigationDestination(for: String.self, destination: { toDoItem in
+                Text(toDoItem)
+            })
             .navigationTitle("My To-do List")
             .navigationBarItems(
                 trailing: Button(action: {
@@ -40,15 +43,7 @@ struct ContentView: View {
                 })
             )
             
-        }.alert("what are you gonna do?", isPresented: $showingAlert) {
-            TextField("write here", text: $newItem)
-            Button(action: {
-                addItem()
-            }, label: {
-                Text("OK")
-            })
-                
-            }
+        }
     }
 }
 
